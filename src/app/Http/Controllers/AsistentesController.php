@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-// Agregar el modelo Evento
-use App\Models\Evento;
-
+use App\Models\Asistentes;
+// Agregar la clase Request para manejar las peticiones
 use Illuminate\Http\Request;
 // Agregar la clase Validator para validar los datos de la petición
 use Illuminate\Support\Facades\Validator;
 
-class EventoController extends Controller
+class AsistentesController extends Controller
 {
     /**
     *  * Mostrar una lista del recurso.
@@ -17,10 +16,10 @@ class EventoController extends Controller
     public function index()
     {
         // Recuperar todos los recursos
-       $eventos = Evento::all();
+       $asistentes = Asistentes::all();
        // Retornar los recursos recuperados
        $respuesta = [
-        'eventos' => $eventos, 
+        'asistentes' => $asistentes, 
         'status' => 200,  
     ];
     return response()->json($respuesta);
@@ -32,11 +31,10 @@ class EventoController extends Controller
    {
     // Validar que la petición contenga todos los datos necesarios
     $validator = Validator::make($request->all(), [
-        'titulo' => 'required',
-        'descripcion' => 'required',
-        'fecha_inicio' => 'required|date',
-        'fecha_fin' => 'required|date',
-        'ubicacion' => 'required',
+
+        'nombre'=> 'required',
+        'email' => 'required',
+        'telefono'=> 'required',
     ]);
     // Si la petición no contiene todos los datos necesarios retornar un mensaje de error
     if ($validator->fails()) {
@@ -47,12 +45,12 @@ class EventoController extends Controller
         return response()->json($respuesta, 400);
     }
     // Crear un nuevo recursos con los datos de la petición
-    $evento = Evento::create([
-         'titulo' => $request->titulo,
-         'descripcion' => $request->descripcion,
-         'fecha_inicio' => $request->fecha_inicio,
-         'fecha_fin' => $request->fecha_fin,
-         'ubicacion' => $request->ubicacion,
+    $asistentes = Asistentes::create([
+        'nombre'=> $request->nombre,
+        'email'=> $request->email,
+        'telefono'=> $request->telefono,
+        
+       
      ]);
         // Si el recurso no se pudo crear, retornar un mensaje deerror
         if (!$evento) {
@@ -64,7 +62,7 @@ class EventoController extends Controller
         }
         // Retornar el recurso creado
         $respuesta = [
-            'evento' => $evento,
+            'asistentes' => $asistentes,
             'status' => 201,
         ];
         return response()->json($respuesta, 201);
@@ -75,9 +73,9 @@ class EventoController extends Controller
     public function show($id)
      {
         // Recuperar el recurso especificado
-        $evento = Evento::find($id);
+        $asistentes = Asistentes::find($id);
              // Si el recurso no se pudo recuperar, retornar un mensaje de error
-             if (!$evento) {
+             if (!$asistentes) {
                 $respuesta = [
                     'message' => 'Evento no encontrado',                  
                     'status' => 404, // No encontrado
@@ -86,7 +84,7 @@ class EventoController extends Controller
             }
             // Retornar el recurso recuperado
             $respuesta = [
-                'evento' => $evento,
+                'asistentes' => $asistentes,
                 'status' => 200, // OK
             ];
             return response()->json($respuesta);
@@ -99,9 +97,9 @@ class EventoController extends Controller
     public function update(Request $request, $id)
  {
     // Recuperar el recurso especificado
-    $evento = Evento::find($id);
+    $asistentes = Asistentes::find($id);
     // Si el recurso no se pudo recuperar, retornar un mensaje de    error
-    if (!$evento) {
+    if (!$asistentes) {
         $respuesta = [
             'message' => 'Evento no encontrado',
             'status' => 404, // No encontrado
@@ -125,15 +123,13 @@ class EventoController extends Controller
             return response()->json($respuesta, 400);
         }
         // Actualizar el recurso especificado con los datos de lapetición
-        $evento->titulo = $request->titulo;
-        $evento->descripcion = $request->descripcion;
-        $evento->fecha_inicio = $request->fecha_inicio;
-        $evento->fecha_fin = $request->fecha_fin;
-        $evento->ubicacion = $request->ubicacion;
-        $evento->save();
+        $asistentes->nombre= $request->nombre;
+        $asistentes->email= $request->email;
+        $asistentes->telefono= $request->telefono;
+        $asistentes->save();
         // Retornar el recurso actualizado
         $respuesta = [
-            'evento' => $evento,
+            'asistentes' => $asistentes,
             'status' => 200, // OK
         ];
         return response()->json($respuesta);
@@ -145,9 +141,9 @@ class EventoController extends Controller
     {
 
         // Recuperar el recurso especificado
-        $evento = Evento::find($id);
+        $asistentes = Asistentes::find($id);
         // Si el recurso no se pudo recuperar, retornar un mensaje deerror
-        if (!$evento) {
+        if (!$asistentes) {
             $respuesta = [
                 'message' => 'Evento no encontrado',
                 'status' => 404, // No encontrado
@@ -155,7 +151,7 @@ class EventoController extends Controller
             return response()->json($respuesta, 404);
         }
         // Eliminar el recurso especificado
-        $evento->delete();
+        $asistentes->delete();
         // Retornar un mensaje de éxito
         $respuesta = [
             'message' => 'Evento eliminado',
@@ -164,3 +160,8 @@ class EventoController extends Controller
         return response()->json($respuesta);
     }
 }
+ 
+
+
+
+
