@@ -44,7 +44,7 @@ class PonentesController extends Controller
         return response()->json($respuesta, 400);
     }
     // Crear un nuevo recursos con los datos de la petición
-    $evento = Evento::create([
+    $ponentes = Ponentes::create([
         'nombre' => $request->nombre,
         'biografia' => $request->biografia,
         'especialidad'=> $request->especialidad,
