@@ -53,9 +53,9 @@ class AsistentesController extends Controller
        
      ]);
         // Si el recurso no se pudo crear, retornar un mensaje deerror
-        if (!$evento) {
+        if (!$asistentes) {
             $respuesta = [
-                'message' => 'Error al crear el evento',
+                'message' => 'Error al crear el asistentes',
                 'status' => 500, // Error interno del servidor
            ];
            return response()->json($respuesta, 500);

@@ -1,17 +1,17 @@
 services:
  mariadb: 
-     image: 'bitnami/mariadb:latest' 
+     image: 'bitnamilegacy/mariadb:latest' 
      environment: 
          - ALLOW_EMPTY_PASSWORD=yes
          - MARIADB_USER=bn_myapp 
-         - MARIADB_DATABASE=bitnami_myapp 
+         - MARIADB_DATABASE=bitnami_myapp
          - MARIADB_PASSWORD=b1tnam1_my@pp 
      volumes: 
          - 'mariadb_data:/bitnami/mariadb' 
      networks: 
          - laravel-network 
  application: 
-     image: 'bitnami/laravel:latest'
+     image: 'bitnamilegacy/laravel:latest'
      environment: 
         - LARAVEL_DATABASE_TYPE=mysql
         - LARAVEL_DATABASE_HOST=mariadb 
